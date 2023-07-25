@@ -1,0 +1,20 @@
+<script src="/js/js-sdk-master/dist/pocketbase.umd.js"></script>
+<script type="text/javascript">
+  async function fetchDataAndAuth() {
+    const pb = new PocketBase("http://127.0.0.1:8090");
+    try {
+        
+        const authData = await pb.admins.authWithPassword('jean.t@affinityhealth.co.za', '2p3L5S!wzr5@E8+');
+
+        console.log(pb.authStore.isValid);
+        console.log(pb.authStore.token);
+        console.log(pb.authStore.model.id);
+        
+        pb.authStore.clear();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  fetchDataAndAuth();
+</script>
