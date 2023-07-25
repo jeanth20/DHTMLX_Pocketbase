@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title></title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="/codebase/icons/EtivaLeaf.png">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="../codebase/suite.js"></script>
+        <script type="text/javascript" src="../codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../codebase/nodejsEvent.js"></script>
+		<script type="text/javascript" src="../codebase/common.js"></script>
+        <script type="text/javascript" src="../codebase/toolbox.js"></script>
+        <link rel="stylesheet" href="../codebase/suite.css">
+		
+		<!-- custom sample head -->
+	</head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .origin {
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+
+        .center {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+            line-height: normal;
+            vertical-align: middle;
+        }
+        
+        .center-button {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .dhx_layout-cell-content:not(.dhx_layout-cell) {
+            padding: 12px;
+        }
+    </style>
+    
+    <body style="height: 100%;">
+		<header>
+
+        </header>
+
+            <div id="layout" style="height: 100%;"></div>
+
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.css?v=6.4.2" media="all" rel="stylesheet" type="text/css">
+
+            <!-- auxiliary controls for interacting with the sample -->
+            <link rel="stylesheet" href="https://snippet.dhtmlx.com/codebase/assets/css/auxiliary_controls.css">
+
+            <section class="dhx_sample-controls">
+            <button id="collapse" class="dhx_sample-btn dhx_sample-btn--flat" style="margin-right: 20px" onclick="sidebar.collapse()">Collapse</button>
+            <button id="expand" class="dhx_sample-btn dhx_sample-btn--flat" onclick="sidebar.expand()">Expand</button>
+            </section>
+            <!-- component container -->
+            <div style="height: 100%" id="sidebar"></div>
+
+<!-- dataset -->
+<script>
+  const data = [
+    { 
+      id: "dashboard", 
+      value: "Dashboard", 
+      icon: "mdi mdi-view-dashboard" 
+    },
+    {
+      id: "progress",
+      value: "Progress",
+      icon: "mdi mdi-chart-line"
+    },
+    {
+      id: "reports",
+      value: "Reports",
+      icon: "mdi mdi-file-chart"
+    },
+    {
+      id: "account", 
+      value: "Account",
+      icon: "mdi mdi-account-box",
+      items: [
+        {
+          //id: "addPage",
+          //value: "New Page",
+          //icon: "mdi mdi-plus"
+        },
+        {
+          //id: "allPage",
+          //value: "Pages",
+          //icon: "mdi mdi-view-list"
+        },
+        {
+          //id: "categoryPages",
+          //value: "Category",
+          //icon: "mdi mdi-tag" 
+        }
+      ]
+    },
+    { 
+      type: "separator" 
+    },
+    { 
+      id: "posts", 
+      value: "Posts", 
+      icon: "mdi mdi-square-edit-outline",
+      items: [
+        {
+          id: "addPost",
+          value: "New Post",
+          icon: "mdi mdi-plus"
+        },
+        {
+          id: "allPost",
+          value: "Posts",
+          icon: "mdi mdi-view-list"
+        },
+        {
+          id: "categoryPost",
+          value: "Category",
+          icon: "mdi mdi-tag" 
+        }
+      ]
+    },
+        { 
+      id: "documents", 
+      value: "Documents",
+      icon: "mdi mdi-file-outline",
+      items: [
+        {
+          id: "addPage",
+          value: "New Page",
+          icon: "mdi mdi-plus"
+        },
+        {
+          id: "allPage",
+          value: "Pages",
+          icon: "mdi mdi-view-list"
+        },
+        {
+          id: "categoryPages",
+          value: "Category",
+          icon: "mdi mdi-tag" 
+        }
+      ]
+    },
+    { 
+      type: "separator" 
+    },
+    { 
+      id: "messages", 
+      value: "Messages", 
+      count: 18, 
+      icon: "mdi mdi-email-mark-as-unread"
+    },
+    { 
+      id: "media", 
+      value: "Media",
+      icon: "mdi mdi-folder-multiple-image"
+    },
+    { 
+      id: "links", 
+      value: "Links",
+      icon: "mdi mdi-link"
+    },
+    { 
+      id: "comments", 
+      value: "Comments",
+      icon: "mdi mdi-comment-multiple-outline",
+      count: "118",
+      countColor: "primary",
+      items: [
+        { 
+          id: "myComments", 
+          value: "My Comments",
+          count: 15,
+          icon: "mdi mdi-account",
+        },
+        { 
+          id: "allComments", 
+          value: "All Comments",
+          count: 103,
+          countColor: "primary",
+          icon: "mdi mdi-comment-multiple-outline",
+        },
+      ] 
+    },
+    { 
+      type: "separator" 
+    },
+    { 
+      id: "notification", 
+      value: "Notification", 
+      count: 25, 
+      icon: "mdi mdi-bell", 
+      countColor: "primary" 
+    },
+    { 
+      id: "configuration",
+      value: "Configuration", 
+      icon: "mdi mdi-settings",
+      items: [
+        { 
+          id: "myAccount", 
+          value: "My Account",
+          icon: "mdi mdi-account-settings"
+        },
+        { 
+          id: "general", 
+          value: "General Configuration",
+          icon: "mdi mdi-tune"
+        }
+      ]
+    }
+  ];
+
+  const sidebar = new dhx.Sidebar("sidebar", {
+    css: "dhx_widget--border_right"
+  });
+  
+  sidebar.data.parse(data);
+</script>
+
+
+	</body>
+</html>

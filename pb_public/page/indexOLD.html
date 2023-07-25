@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title>Login</title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="/codebase/icons/EtivaLeaf.png">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="./codebase/suite.js"></script>
+        <script type="text/javascript" src="./codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="./codebase/nodejsEvent.js"></script>
+		<script type="text/javascript" src="./codebase/common.js"></script>
+        <script type="text/javascript" src="./codebase/toolbox.js"></script>
+        <link rel="stylesheet" href="./codebase/suite.css">
+        <link rel="stylesheet" href="./codebase/toolbox.css">
+		
+	</head>
+    <style>
+
+    </style>
+    
+    <body style="height: 100%;">
+		<header>
+
+        </header>
+
+            <div id="layout" style="height: 100%;"></div>
+            <div id="loginform" class="origin center" style="height: 100%; margin: 40px; display:block;"></div>
+                    
+<!-- dataset -->
+<script>
+	
+
+    const loginForm = new dhx.Form("loginform", {
+        css: "dhx_widget--bg_white dhx_layout-cell--bordered",
+        padding: 40,
+
+        rows: [
+            {
+                type: "text",
+                name: "login Form",
+                label: "Login",
+                value: "dhtmlx7.local"
+            },
+            {
+                type: "input",
+                id: "username",
+                name: "username",
+                label: "Username",
+                icon: "dxi dxi-key dxi",
+                placeholder: "Username",
+                required: "true",
+            },
+            {
+                type: "input",
+                id: "password",
+                name: "password",
+                inputType: "password",
+                icon: "dxi dxi-eye-off",
+                label: "Password",
+                placeholder: "********",
+                required: "true",
+            },
+            {
+                css: "center-button",
+                cols: [
+                    {
+                        type: "button",
+                        id: "login",
+                        name: "login",
+                        text: "Login",
+                        size: "large",
+                        view: "link",
+                        circle: "true",
+                        full: "true",
+                        submit: true,
+                        color: "primary",
+                    },
+                    {
+                        type: "button",
+                        id: "forgot_password",
+                        name: "forgot_password",
+                        text: "Forgot Password",
+                        size: "medium",
+                        view: "link",
+                        circle: "true",
+                        full: "true",
+                        submit: true,
+                        color: "secondary",
+                    },
+                    {
+                        type: "button",
+                        id: "signup",
+                        name: "signup",
+                        text: "Sign up",
+                        size: "large",
+                        view: "link",
+                        circle: "true",
+                        full: "true",
+                        submit: true,
+                        color: "secondary",
+                    },
+                ],
+            },
+        ]
+    })
+
+    loginForm.events.on("click", function (id) {
+        if (id == 'login'){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            if 
+            (!username) {
+                Error("You Must Supply a Username to use this Service");
+            } else {
+                if (!password) {
+                    Error("You Must Supply a Password to use this Service");
+                } else {
+                    var request = new Object();
+                    request.url = "/user/login";
+                    request.username = username;
+                    request.password = password;
+                    sendData(request, "processLogin");
+                }
+            }
+        }else if (id == 'forgot_password'){
+            window.location = "/webpages/session.cgi";
+            //alert("This function isnt available yet")
+        }else{
+            window.location = "/webpages/signup.html";
+        }
+    });
+
+</script>
+
+	</body>
+</html>

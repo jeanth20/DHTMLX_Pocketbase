@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title></title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" xmlns="http://www.w3.org/2000/svg" href="sample_logo">
+    <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="../codebase/suite.js"></script>
+    <script type="text/javascript" src="../codebase/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../codebase/nodejsEvent.js"></script>
+    <script type="text/javascript" src="../codebase/toolbox.js"></script>
+    <link rel="stylesheet" href="../codebase/materialdesignicons.min.css">
+		<link rel="stylesheet" href="../codebase/suite.css">
+    <link rel="stylesheet" href="../codebase/toolbox.css">
+
+    <!-- icons -->
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
+	</head>
+
+	<style>
+        body, html {
+            margin: 0;
+            height: 100%
+          }
+	</style>
+        <body>
+            <header>
+            </header>
+			
+            <template id="sample_logo" style="display:none;">
+                <svg viewBox="0 0 40 18" xmlns="http://www.w3.org/2000/svg" class="sample-logo">
+                <path fill="#2095f3" fill-rule="evenodd"
+                        d="M15.5 8.75C15.5 10.4 15.15 11.85 14.45 13.15C13.75 14.45 12.85 15.45 11.75 16.1C10.85 16.7 9.85 17.05 8.8 17.25C7.75 17.4 6.6 17.5 5.4 17.5H0V0H5.4C6.6 0 7.75 0.1 8.85 0.25C9.9 0.4 10.9 0.8 11.85 1.4C13 2.15 13.9 3.15 14.55 4.4C15.15 5.6 15.5 7.1 15.5 8.75ZM23 17.5L27 11.3V6L23 0V6.2H17.5V0H13V1.9C13.8 2.55 14.5 3.35 15 4.35C15.65 5.6 16 7.05 16 8.75C16 10.4 15.65 11.85 14.95 13.15C14.4 14.1 13.75 14.9 13 15.55V17.5H17.5V10.15H23V17.5ZM31.75 11.3L35.05 17.5H40L33.95 8.45L40 0H35.05L31.75 5.1L28.45 0H23.5L29 8.45L23.5 17.5H28.45L31.75 11.3ZM8.80005 3.89999C9.60005 4.34999 10.2 4.99999 10.6 5.79999C11 6.59999 11.2 7.59999 11.25 8.69999C11.25 9.89999 11.05 10.85 10.7 11.65C10.3 12.45 9.75005 13.1 9.05005 13.55C8.45005 13.95 7.80005 14.15 7.15005 14.2C6.45005 14.25 5.65005 14.25 4.65005 14.25H4.55005V3.29999H4.65005C5.55005 3.29999 6.30005 3.29999 6.95005 3.34999C7.60005 3.39999 8.20005 3.54999 8.80005 3.89999Z">
+                </path>
+                </svg>
+            </template>
+  		    <div id="layout" class="content"></div>
+    	  </body>
+      <script src="/js/js-sdk-master/dist/pocketbase.umd.js"></script>
+      <script>
+        const pb = new PocketBase("http://127.0.0.1:8090");
+        document.addEventListener('DOMContentLoaded', checkCookie);
+
+        const layout = new dhx.Layout("layout", {
+                type: "line",
+                rows: [
+                    {
+                        id: "toolbar",
+                        height: "55px",
+                    },
+                    {
+                        cols: [
+                            {
+                                id: "sidebar",
+                                header: "",
+                                collapsable: true,
+                                width: "200px",
+                                resizable: true,
+                                expand: true,
+                            },
+                            {
+                              id: "content",
+                              header: "",
+                              html: "<h2>This is where the Content goes</h2>"
+                              //resizable: true
+                            },
+                            {
+                                id: "rightbar",
+                                header: "Aside",
+                                collapsable: true,
+                                width: "200px"
+                            },
+                        ]
+                    },
+                    {
+                        id: "footer",
+                        //header: "Footer",
+                        //collapsable: true,
+                        height: "55px"
+                    }
+                ]
+            });
+
+
+    const logoSVG = document.getElementById("sample_logo").innerHTML;
+
+		const structure = [
+                {
+                    "id": "menu",
+                    "type": "button",
+                    "view": "link",
+                    "circle": true,
+                    "color": "secondary",
+                    "icon": "mdi mdi-menu",
+                    "tooltip": "Menu",
+                        items: [
+                        { 
+                            id: "dashboard", 
+                            value: "Dashboard", 
+                            icon: "mdi mdi-view-dashboard" 
+                          },
+                          {
+                            id: "statistics",
+                            value: "Statistics",
+                            icon: "mdi mdi-chart-line"
+                          },
+                          {
+                            id: "reports",
+                            value: "Reports",
+                            icon: "mdi mdi-file-chart"
+                          },
+                          { 
+                            type: "separator" 
+                          },
+                          { 
+                            id: "posts", 
+                            value: "Posts", 
+                            icon: "mdi mdi-square-edit-outline",
+                            items: [
+                              {
+                                id: "addPost",
+                                value: "New Post",
+                                icon: "mdi mdi-plus"
+                              },
+                              {
+                                id: "allPost",
+                                value: "Posts",
+                                icon: "mdi mdi-view-list"
+                              },
+                              {
+                                id: "categoryPost",
+                                value: "Category",
+                                icon: "mdi mdi-tag" 
+                              }
+                            ]
+                          },
+                          { 
+                            id: "pages", 
+                            value: "Pages",
+                            icon: "mdi mdi-file-outline",
+                            items: [
+                              {
+                                id: "addPage",
+                                value: "New Page",
+                                icon: "mdi mdi-plus"
+                              },
+                              {
+                                id: "allPage",
+                                value: "Pages",
+                                icon: "mdi mdi-view-list"
+                              },
+                              {
+                                id: "categoryPages",
+                                value: "Category",
+                                icon: "mdi mdi-tag" 
+                              }
+                            ]
+                          },
+                          { 
+                            id: "messages", 
+                            value: "Messages", 
+                            count: 18, 
+                            icon: "mdi mdi-email-mark-as-unread"
+                          },
+                          { 
+                            id: "media", 
+                            value: "Media",
+                            icon: "mdi mdi-folder-multiple-image"
+                          },
+                          { 
+                            id: "links", 
+                            value: "Links",
+                            icon: "mdi mdi-link"
+                          },
+                          { 
+                            id: "comments", 
+                            value: "Comments",
+                            icon: "mdi mdi-comment-multiple-outline",
+                            count: "118",
+                            countColor: "primary",
+                            items: [
+                              { 
+                                id: "myComments", 
+                                value: "My Comments",
+                                count: 15,
+                                icon: "mdi mdi-account",
+                              },
+                              { 
+                                id: "allComments", 
+                                value: "All Comments",
+                                count: 103,
+                                countColor: "primary",
+                                icon: "mdi mdi-comment-multiple-outline",
+                              },
+                            ] 
+                          },
+                          { 
+                            type: "spacer"
+                          },
+                          { 
+                            id: "notification", 
+                            value: "Notification", 
+                            count: 25, 
+                            icon: "mdi mdi-bell", 
+                            countColor: "primary" 
+                          },
+                          { 
+                            id: "configuration",
+                            value: "Configuration", 
+                            icon: "mdi mdi-settings",
+                            items: [
+                              { 
+                                id: "myAccount", 
+                                value: "My Account",
+                                icon: "mdi mdi-account-settings"
+                              },
+                              { 
+                                id: "general", 
+                                value: "General Configuration",
+                                icon: "mdi mdi-tune"
+                              }
+                            ]
+                          }
+                        //];
+                        ]
+                },
+                {
+                    type: "spacer"
+                },
+                {
+                    type: "customHTML",
+                    html: logoSVG,
+                    css: "logo-container"
+                },
+                {
+                    type: "spacer"
+                },
+                {
+                    id: "avatar",
+                    type: "imageButton",
+                    src: "https://snippet.dhtmlx.com/codebase/data/toolbar/01/img/avatar-01.png",
+                    tooltip: "profile",
+                    count: 10,
+                    items: [
+                        {
+                            id: "setting",
+                            value: "settings",                   
+                            icon: "mdi mdi-cog",
+                            tooltip: "Setting",
+                            "type": "button",
+                            "view": "link",
+                            "color": "secondary",
+                            "circle": true,
+                        },
+                        {
+                            type: "button",
+                            value: "private messages",
+                            count: 10
+                        },
+                        {
+                            value: "log out"
+                        }
+                    ]
+                },
+            ]
+
+            // Toolbar initialization
+            const toolbar = new dhx.Toolbar(null, {
+                css: "dhx_widget--border_bottom"
+
+            });
+            // loading structure into Toolbar
+            toolbar.data.parse(structure);
+
+            // attaching Toolbar into a Layout cell
+            layout.getCell("toolbar").attach(toolbar);
+
+            const footerstructure = [
+            {
+                type: "spacer"
+            },
+            {
+                id: "dashboard",
+                value: "",
+                icon: "mdi mdi-view-dashboard",
+                group: "page",
+                //twoState: true,
+                //active: true
+            },
+            {
+                type: "spacer"
+            },
+            {
+                id: "statistics",
+                value: "",
+                icon: "mdi mdi-chart-line",
+                group: "page",
+                //twoState: true,
+                //active: false
+            },
+            {
+                type: "spacer"
+            },
+            {
+                id: "requests",
+                value: "",
+                icon: "mdi mdi-email-mark-as-unread",
+                group: "page",
+                //twoState: true,
+                //active: false
+            },
+            {
+                type: "spacer"
+            },
+            {
+                id: "media",
+                value: "",
+                icon: "mdi mdi-play",
+                group: "page",
+                //twoState: true,
+                //active: false
+            },
+            {
+                type: "spacer"
+            },
+
+        ]
+
+		//const footer = new dhx.Toolbar(null, {
+		//	css: "dhx_widget--border_bottom"
+
+		//});
+		//footer.data.parse(footerstructure);
+        //layout.getCell("footer").attach(footer);
+        const sidebarstructure = [
+        { 
+          id: "dashboard", 
+          value: "Dashboard", 
+          icon: "mdi mdi-view-dashboard" 
+        },
+        {
+          id: "statistics",
+          value: "Statistics",
+          icon: "mdi mdi-chart-line"
+        },
+        {
+          id: "reports",
+          value: "Reports",
+          icon: "mdi mdi-file-chart"
+        },
+        { 
+          type: "separator" 
+        },
+        { 
+          id: "posts", 
+          value: "Posts", 
+          icon: "mdi mdi-square-edit-outline",
+          items: [
+            {
+              id: "addPost",
+              value: "New Post",
+              icon: "mdi mdi-plus"
+            },
+            {
+              id: "allPost",
+              value: "Posts",
+              icon: "mdi mdi-view-list"
+            },
+            {
+              id: "categoryPost",
+              value: "Category",
+              icon: "mdi mdi-tag" 
+            }
+          ]
+        },
+        { 
+          id: "pages", 
+          value: "Pages",
+          icon: "mdi mdi-file-outline",
+          items: [
+            {
+              id: "addPage",
+              value: "New Page",
+              icon: "mdi mdi-plus"
+            },
+            {
+              id: "allPage",
+              value: "Pages",
+              icon: "mdi mdi-view-list"
+            },
+            {
+              id: "categoryPages",
+              value: "Category",
+              icon: "mdi mdi-tag" 
+            }
+          ]
+        },
+        { 
+          id: "messages", 
+          value: "Messages", 
+          count: 18, 
+          icon: "mdi mdi-email-mark-as-unread"
+        },
+        { 
+          id: "media", 
+          value: "Media",
+          icon: "mdi mdi-folder-multiple-image"
+        },
+        { 
+          id: "links", 
+          value: "Links",
+          icon: "mdi mdi-link"
+        },
+        { 
+          id: "comments", 
+          value: "Comments",
+          icon: "mdi mdi-comment-multiple-outline",
+          count: "118",
+          countColor: "primary",
+          items: [
+            { 
+              id: "myComments", 
+              value: "My Comments",
+              count: 15,
+              icon: "mdi mdi-account",
+            },
+            { 
+              id: "allComments", 
+              value: "All Comments",
+              count: 103,
+              countColor: "primary",
+              icon: "mdi mdi-comment-multiple-outline",
+            },
+          ] 
+        },
+        { 
+          type: "spacer"
+        },
+        { 
+          id: "notification", 
+          value: "Notification", 
+          count: 25, 
+          icon: "mdi mdi-bell", 
+          countColor: "primary" 
+        },
+        { 
+          id: "configuration",
+          value: "Configuration", 
+          icon: "mdi mdi-settings",
+          items: [
+            { 
+              id: "myAccount", 
+              value: "My Account",
+              icon: "mdi mdi-account-settings"
+            },
+            { 
+              id: "general", 
+              value: "General Configuration",
+              icon: "mdi mdi-tune"
+            }
+          ]
+        }
+      ];
+
+        //const sidebar = new dhx.Sidebar(null, {
+		//	css: "dhx_widget--border_right"
+		//});
+
+    //sidebar.data.parse(sidebarstructure);
+    //layout.getCell("sidebar").attach(sidebar);
+    //console.log(window.data);
+
+    </script>
+	
+
+</html>
+

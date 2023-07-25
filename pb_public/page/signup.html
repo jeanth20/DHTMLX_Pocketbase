@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+	<head>
+		<!-- meta block -->
+		<title>Sign up</title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="/codebase/icons/EtivaLeaf.png">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="../codebase/suite.js"></script>
+        <script type="text/javascript" src="../codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../codebase/nodejsEvent.js"></script>
+		<script type="text/javascript" src="../codebase/common.js"></script>
+        <script type="text/javascript" src="../codebase/toolbox.js"></script>
+        <link rel="stylesheet" href="../codebase/suite.css">
+        <link rel="stylesheet" href="../codebase/toolbox.css">
+
+
+	</head>
+    
+    <body style="height: 100%;">
+		<header>
+
+        </header>
+
+            <div id="layout" style="height: 100%;"></div>
+            <div id="signupform" class="origin center" style="height: 100%; margin: 40px; display:block;"></div>
+                    
+    <script>
+
+        const signupForm = new dhx.Form("signupform", {
+            css: "dhx_widget--bg_white dhx_layout-cell--bordered",
+            padding: 40,
+            rows: [
+                {
+                    type: "text",
+                    name: "signup Form",
+                    label: "Sign up",
+                    value: "Dont have an account, sign up now"
+                },
+                {
+                    type: "input",
+                    id: "firstName",
+                    label: "First Name",
+                    value: "",
+                    placeholder: "First Name",
+                    validation: function (value) {
+                        return value && value.length >= 4;
+                    },
+                    errorMessage: "Invalid Name",
+                    successMessage: "Correctly",
+                    preMessage: ""
+                },
+                {
+                    type: "input",
+                    id: "lastName",
+                    label: "Last Name",
+                    value: "",
+                    placeholder: "Last Name",
+                    validation: function (value) {
+                        return value && value.length >= 4;
+                    },
+                    errorMessage: "Invalid Name",
+                    successMessage: "Correctly",
+                    preMessage: ""
+                },
+                {
+                    type: "input",
+                    id: "contactDetails",
+                    label: "Contact Details",
+                    placeholder: "Cellphone Number",
+                    validation: function (value) {
+                        return value && value.length == 10;
+                    },
+                    errorMessage: "Invalid Number",
+                    successMessage: "Valid Number",
+                    validation: "numeric",
+                },
+                {
+                    type: "input",
+                    id: "emailAddress",
+                    label: "Email Address",
+                    placeholder: "Email address",
+                    errorMessage: "Invalid Email",
+                    successMessage: "Valid Email",
+                    validation: "email",
+                },
+                {
+                    type: "input",
+                    id: "password",
+                    label: "Password",
+                    placeholder: "Password",
+                    errorMessage: "Invalid Password",
+                    successMessage: "Valid Password",
+                    validation: "alphanumeric",
+                },
+                {
+                    type: "input",
+                    id: "confirm_password",
+                    label: "Confirm Password",
+                    placeholder: "Confirm Password",
+                    errorMessage: "Invalid Password",
+                    successMessage: "Valid Password",
+                    validation: "alphanumeric",
+                },
+                {
+                    css: "center-button",
+                    cols: [
+                        {
+                            type: "button",
+                            id: "signup",
+                            name: "signup",
+                            text: "Sign up",
+                            size: "large",
+                            view: "link",
+                            circle: "true",
+                            full: "true",
+                            submit: true,
+                            color: "primary",
+                        },
+                        {
+                            type: "button",
+                            id: "login",
+                            name: "login",
+                            text: "Login",
+                            size: "large",
+                            view: "link",
+                            circle: "true",
+                            full: "true",
+                            submit: true,
+                            color: "secondary",
+                        },
+                    ],
+                },
+        	]
+        })
+    
+        function checkpassword(){
+
+        }
+        signupForm.events.on("click", function (id) {
+            if (id == 'signup'){
+                
+                var firstName = $("#firstName").val();
+                var lastName = $("#lastName").val();
+                var contactDetails = $("#contactDetails").val();
+                var emailAddress = $("#emailAddress").val();
+                var password = $("#password").val();
+                var confirm_password = $("#confirm_password").val();
+                
+                if (password != confirm_password){
+                    Error("Passwords dont match");
+                    errorMessage("Invalid Password");
+                }else{
+                    var request = new Object();
+                    request.url = "/user/signup";
+                    request.firstName = firstName;
+                    request.lastName = lastName;
+                    request.contactDetails = contactDetails;
+                    request.emailAddress = emailAddress;
+                    request.password = password;
+                    sendData(request, "signupsuccess");
+                }
+            }else{
+                window.location = "../index.html";
+            }
+        });
+
+        
+
+</script>
+
+	</body>
+</html>

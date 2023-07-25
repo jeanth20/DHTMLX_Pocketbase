@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title>Homepage</title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="/codebase/icons/EtivaLeaf.png">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="../codebase/suite.js"></script>
+        <script type="text/javascript" src="../codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../codebase/nodejsEvent.js"></script>
+		<script type="text/javascript" src="../codebase/common.js"></script>
+        <link rel="stylesheet" href="../codebase/suite.css">
+        <link rel="stylesheet" href="../codebase/toolbox.css">
+		
+	</head>
+
+	<style>
+		
+	</style>
+    <body style="height: 100%;">
+		<header>
+        </header>
+
+			<div id="menubar" style="padding: 10px;"></div>
+			<section class="dhx_sample-container">
+				<div class="dhx_sample-container__sidebar"> </div>
+			</section>
+			
+			
+	</body>
+
+	<script>
+		const dataset = [
+        {
+            value: "Menu",
+            items: [
+                {
+                    value: "Option 1",
+                    icon: "fas fa-file",
+                },
+				{
+					"type": "spacer"
+				},
+				{
+                    value: "Option 2",
+                    icon: "fas fa-file",
+                },
+				{
+					"type": "spacer"
+				},
+                {
+                    value: "Option 3",
+                    icon: "fas fa-file",
+                },
+				{
+					"type": "spacer"
+				},
+                {
+                    value: "Option 4",
+                    icon: "fas fa-file",
+                },
+				{
+					"type": "spacer"
+				},
+				{
+                    value: "Option 5",
+                    icon: "fas fa-file",
+                },
+            ]
+        },
+		{
+			"type": "spacer"
+		},
+		{
+			type: "imageButton",
+			count: 10,
+			src: "../img/avatar.png"
+		},
+		{
+			"value": "Logout",
+			"items": [{
+					"id": "about",
+					"value": "About",
+					"icon": "mdi mdi-information-variant"
+				},
+				{
+					"id": "help",
+					"value": "Help",
+					"icon": "mdi mdi-help"
+				},
+				{
+					"id": "Logout",
+					"value": "Logout",
+					"icon": "mdi mdi-bug"
+				}
+			]
+		}
+    ];
+
+
+		const menu = new dhx.Menu("menubar", {
+			css: "dhx_widget--bg_white dhx_widget--bordered"
+		});
+		
+		menu.data.parse(dataset);
+
+		const events = [
+			"click",
+			"openmenu",
+			"beforeHide",
+			"afterHide"
+		];
+
+		const eventsContainer = document.querySelector(".dhx_sample-container__sidebar");
+		events.forEach(function (event) {
+			menu.events.on(event, function () {
+
+				eventsContainer.insertAdjacentHTML('afterbegin', getEvent(event, arguments));
+			
+			});
+		});
+
+		let counter = 1;
+		function getEvent(event, args) {
+			let argsList = "<div class='arguments'>Arguments:</div>";
+			for (let i = 0; i < args.length; i++) {
+
+				argsList += "<div>" + args[i] + "</div>";
+			}
+			return "<div class=\"dhx_sample-event\">Event " + counter++ + ": " + event + argsList + "</div>";
+		}
+
+		menu.events.on(event, function () {
+
+
+		
+		});
+
+
+
+
+		
+	</script>
+<!-- icons -->
+<link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
+
+
+</html>
+

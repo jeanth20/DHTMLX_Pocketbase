@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title>Homepage/Toolbar</title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="/codebase/icons/EtivaLeaf.png">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="../codebase/suite.js"></script>
+        <script type="text/javascript" src="../codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../codebase/nodejsEvent.js"></script>
+		<script type="text/javascript" src="../codebase/common.js"></script>
+        <link rel="stylesheet" href="../codebase/materialdesignicons.min.css">
+		<link rel="stylesheet" href="../codebase/suite.css">
+        <link rel="stylesheet" href="../codebase/toolbox.css">
+
+		
+	</head>
+
+	<style>
+
+	  </style>
+
+    <body style="height: 100%;">
+		<header>
+        </header>
+			
+			<div style="margin: 10px" id="toolbar"></div>
+			<div id="menubar" style="padding: 10px;"></div>
+			<section class="dhx_sample-container">
+				<div class="dhx_sample-container__sidebar"> </div>
+			</section>
+			
+			
+	</body>
+
+	<script>
+		//https://snippet.dhtmlx.com/7aysw3gb?text=#toolbar
+		//https://snippet.dhtmlx.com/rv3gq5qe?text=#toolbar
+
+
+		const structure = [
+        {
+			"id": "menu",
+			"type": "button",
+			"view": "link",
+			"circle": true,
+			"color": "secondary",
+			"icon": "mdi mdi-menu",
+			"tooltip": "Menu",
+		},
+		{
+			type: "spacer"
+		},
+		{
+			id: "dashboard",
+			value: "",
+			icon: "mdi mdi-view-dashboard",
+			group: "page",
+			twoState: true,
+			active: true
+		},
+		{
+			id: "statistics",
+			value: "",
+			icon: "mdi mdi-chart-line",
+			group: "page",
+			twoState: true,
+			active: false
+		},
+		{
+			id: "requests",
+			value: "",
+			icon: "mdi mdi-email-mark-as-unread",
+			group: "page",
+			twoState: true,
+			active: false
+		},
+		{
+		    id: "media",
+		    value: "",
+		    icon: "mdi mdi-folder-multiple-image",
+		    group: "page",
+		    twoState: true,
+		    active: false
+		},
+		{
+			type: "spacer"
+		},
+		{
+			id: "setting",
+			icon: "mdi mdi-cog",
+			tooltip: "Setting",
+			"type": "button",
+			"view": "link",
+			"color": "secondary",
+			"circle": true,
+		},
+		{
+			id: "avatar",
+			type: "imageButton",
+			src: "/codebase/icons/",
+		}
+	]
+
+
+		// Layout initialization
+		const layout = new dhx.Layout("layout", {
+			rows: [
+				{ id: "toolbar", height: "content" },
+				{
+					type: "space",
+					rows: [
+						{}
+					]
+				}
+			]
+		});
+
+		// Toolbar initialization
+		const toolbar = new dhx.Toolbar(null, {
+			css: "dhx_widget--border_bottom"
+
+		});
+		// loading structure into Toolbar
+		toolbar.data.parse(structure);
+
+		// attaching Toolbar into a Layout cell
+		layout.getCell("toolbar").attach(toolbar);
+
+		
+	</script>
+	
+<!-- icons -->
+<link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
+
+</html>
+
