@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- meta block -->
+		<title></title>
+		<meta name="description" content="">
+		<link rel="icon" type="image/x-icon" href="">
+        <!-- end meta block -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		<script type="text/javascript" src="./codebase/suite.js"></script>
+        <script type="text/javascript" src="./codebase/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="./codebase/nodejsEvent.js"></script>
+        <link rel="stylesheet" href="./codebase/suite.css">
+        <link rel="stylesheet" href="./codebase/toolbox.css">
+	    <!-- icons -->
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
+	</head>
+    <style>
+        .alternate_row .dhx_grid-row:nth-child(2n) {
+            background: #add8e6;
+        }
+    </style>
+    
+    <body style="height: 100%;">
+        <div style="margin: 40px; display: flex; justify-content: center; align-items: center;">
+            <div id="loginform" class="origin center" style="width: 60%"></div>
+        </div>
+    </body>
+
+    <script src="/js/js-sdk-master/dist/pocketbase.umd.js"></script>
+    <script type="text/javascript" src="./codebase/toolbox.js"></script>
+    <script>
+        const pb = new PocketBase("http://127.0.0.1:8090");
+        const loginForm = new dhx.Form("loginform", {
+            css: "dhx_widget--bg_white dhx_layout-cell--bordered",
+            padding: 40,
+            rows: [
+                {
+                    type: "container",
+                    name: "container",
+                },
+                {
+                    type: "text",
+                    name: "login Form",
+                    label: "Login",
+                    value: "dhtmlx7.local"
+                },
+                {
+                    type: "input",
+                    id: "username",
+                    name: "username",
+                    label: "Username",
+                    icon: "mdi mdi-account",
+                    placeholder: "Username",
+                    required: "true",
+                },
+                {
+                    type: "input",
+                    id: "password",
+                    name: "password",
+                    inputType: "password",
+                    icon: "mdi mdi-eye-off",
+                    label: "Password",
+                    placeholder: "********",
+                    required: "true",
+                },
+                {
+                    css: "center-button",
+                    cols: [
+                        {
+                            type: "button",
+                            id: "submit",
+                            name: "submit",
+                            text: "User Sign in",
+                            size: "large",
+                            view: "link",
+                            circle: "true",
+                            full: "true",
+                            submit: true,
+                            color: "primary",
+                        },
+                        //{
+                        //    type: "button",
+                        //    id: "forgot_password",
+                        //    name: "forgot_password",
+                        //    text: "Forgot Password",
+                        //    size: "medium",
+                        //    view: "link",
+                        //    circle: "true",
+                        //    full: "true",
+                        //    submit: true,
+                        //    color: "secondary",
+                        //},
+                        //{
+                        //    type: "button",
+                        //    id: "signup",
+                        //    name: "signup",
+                        //    text: "Sign up",
+                        //    size: "large",
+                        //    view: "link",
+                        //    circle: "true",
+                        //    full: "true",
+                        //    submit: true,
+                        //    color: "secondary",
+                        //},
+                        {
+                            type: "button",
+                            id: "admin",
+                            name: "admin",
+                            text: "Admin Sign in",
+                            size: "large",
+                            view: "link",
+                            circle: "true",
+                            full: "true",
+                            submit: true,
+                            color: "secondary",
+                        },
+                    ],
+                },
+            ]
+        })
+        
+        async function fetchDataAndAuth(username, password) {
+            try {
+                let authData;
+                try {
+                    authData = await pb.admins.authWithPassword(username, password);
+                    user = 'admin';
+                } catch (error) {
+                    console.error('Error in admin authentication:', error);
+                    try {
+                        authData = await pb.collection('users').authWithPassword(username, password);
+                        user = 'user';
+                    } catch (error) {
+                        console.error('Error in users authentication:', error);
+                        login();
+                    }
+                }
+
+                if (pb.authStore.isValid) {
+                    if (pb.authStore.token) {
+                        setCookie('token', pb.authStore.token, 1);
+                        const data = {
+                            "username": username,
+                            "token": pb.authStore.token,
+                            "type": user,
+                            "valid": true
+                        };
+                        const record = await pb.collection('access_via_token').create(data);
+                        window.location.href = 'page/homepage.html';
+                    } else {
+                        pb.authStore.clear();
+                        Error('Login Success ' + username, "default");
+                    }
+                } else {
+                    Error('Login Failed ' + username, "error");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Error('Error Logging In', "error");
+            }
+        }
+
+        loginForm.events.on("click", function (id) {
+            if (id == 'submit') {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                if (!username) {
+                    Error("You Must Supply a Username to use this Service", "error");
+                } else {
+                    if (!password) {
+                        Error("You Must Supply a Password to use this Service", "error");
+                    } else {
+                        fetchDataAndAuth(username, password);
+                    }
+                }
+            } else if (id == 'forgot_password') {
+                Error('Function not available yet', "error");
+            } else if (id == 'signup') {
+                Error('Function not available yet', "error");
+            } else if (id == 'admin') {
+                window.location.href = 'http://127.0.0.1:8090/_/';
+            }
+        });
+
+    </script>
+
+</html>
