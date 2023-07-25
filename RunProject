@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Step 1: Run the Streamlit app
+# streamlit run pb_streamlit/app.py --server.port 8080
+
+# Step 2: Wait for a few seconds to let Streamlit start up (optional, adjust the sleep duration as needed)
+sleep 5
+
+# Step 3: Run the pocketbase serve command
+./pocketbase serve
+
+# Step 4: Run the following commands in the terminal to make the script executable and run it
+# chmod +x run_commands.sh
+
+# Step 5: Run the script
+# ./run_commands.sh
+
+# Step 6: Open the following URLs in your browser
+
+
+# Streamlit will start a web server on port 8080 by default.
+# http://127.0.0.1:8080
+
+#  PocketBase will start a web server on port 8090 by default.
+# http://127.0.0.1:8090/ - if pb_public directory exists, serves the static content from it (html, css, images, etc.)
+# http://127.0.0.1:8090/_/ - Admin dashboard UI
+# http://127.0.0.1:8090/api/ - REST API
+
+
+
+# python with pockebase
+# python3 -m pip install pocketbase
+
+# watch limit increase
+# sysctl fs.inotify.max_user_watches
+# sudo sysctl -w fs.inotify.max_user_watches=524288
